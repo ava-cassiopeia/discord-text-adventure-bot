@@ -1,0 +1,24 @@
+{
+  "name": "discord-text-adventure-bot",
+  "version": "0.1.0",
+  "description": "A bot for using Discord as an interface for Text Adventure games",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "text",
+    "adventure",
+    "text",
+    "adventure",
+    "game",
+    "discord",
+    "chat"
+  ],
+  "author": "Ivan Mattie",
+  "license": "MIT",
+  "dependencies": {
+    "discord.io": "^2.3.0",
+    "strip-ansi": "^3.0.1"
+  }
+}

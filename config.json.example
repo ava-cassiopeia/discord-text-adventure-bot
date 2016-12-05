@@ -1,0 +1,7 @@
+{
+    "api": {
+        "discord": {
+            "token": "[bot token goes here]"
+        }
+    }
+}
