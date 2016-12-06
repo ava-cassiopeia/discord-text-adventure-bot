@@ -6,6 +6,8 @@ This is a Node.js bot for [Discord](https://discordapp.com/) that allows you to
 play classic text adventures (such as Zork) in Discord. It is *not* hosted for
 you, so you will have to run it yourself.
 
+![Bot Demonstration](https://static.ivanmattie.com/img/github/discord-text-adventure-bot/ZBJy77sNkz.gif "Bot Demonstration GIF")
+
 ## Game Support
 
 This bot uses [Frotz](http://frotz.sourceforge.net/) as its interpreter for
