@@ -1,26 +1,22 @@
-var appConfig = require("./config.json");
-
 const MessageHandler = require("./MessageHandler.js");
-
-var child = null;
-
-var readline = require('readline');
-
+var appConfig = require("./config.json");
 var Discord = require('discord.io');
+
+// Create Discord Bot (based on token in config)
 var bot = new Discord.Client({
     token: appConfig.api.discord.token,
     autorun: true
 });
 
+// Handler that will take messages and pass them through to Frotz
 var messageHandler = new MessageHandler(bot);
 
 process.on('exit', function(){
+    // gracefully clean up connection to Discord
     bot.disconnect();
 
-    if(child){
-        child.kill();
-    }
-
+    // we need to close the game so there is not a lingering child process
+    // running in the background
     messageHandler.closeGame();
 });
 

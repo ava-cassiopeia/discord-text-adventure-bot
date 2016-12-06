@@ -10,7 +10,7 @@ class MessageHandler{
 
     constructor(bot){
         this.bot = bot;
-        this.mode = 0; // menu mode
+        this.mode = 0; // start in menu mode
         this.game = null;
         this.targetChannel = null;
         this.compiledOutput = "";
@@ -46,11 +46,22 @@ class MessageHandler{
             }else{
                 this.reply("Nothing to exit from!");
             }
+        }else if(message.match(/^(\$save)/)){
+            // disable saving for now
+            this.reply("Saving is disabled for now.");
         }else{
+            // if nothing else, pass through the message to Frotz (assuming
+            // Frotz is running
             this.handleMessage(message);
         }
     }
 
+    /*
+    * Automatically sends the specified message either to the default channel
+    * (if no channel is specified) or the specified channel. If there is no
+    * default channel set, and a channelID is not specified, then no message
+    * will be sent.
+    */
     reply(message, channelID){
         if(!channelID){
             if(this.targetChannel){
@@ -66,6 +77,10 @@ class MessageHandler{
         });
     }
 
+    /*
+    * Attempts to load a game based on the given user message. If no game is
+    * found, the default channel will be notified.
+    */
     attemptToLoadGame(message){
         var split = message.split(" ");
 
@@ -85,6 +100,9 @@ class MessageHandler{
         }
     }
 
+    /*
+    * Sets the default channel that is used by the reply() method.
+    */
     setTargetChannel(channelID, notify = false){
         this.targetChannel = channelID;
 
@@ -93,39 +111,61 @@ class MessageHandler{
         }
     }
 
+    /*
+    * Loads and starts the game specified by the given game config. This game
+    * config should usuially come from the appConfig file.
+    */
     loadGame(gameConfig){
         this.game = {
             config: gameConfig
         };
 
+        // Create child process (we'll need to keep track of it in case we
+        // need to kill it in the future.
         this.game.child = spawn('frotz', [gameConfig.path]);
 
+        // Setup stream from frotz's stdout so that we can get its output
         this.game.child.stdout.on('data', (chunk) => {
             this.recievedGameOutput(chunk);
         });
 
+        // Try to set the game status of the bot to the current game (this
+        // won't always succeed, depending on the bot's permissions)
         this.bot.setPresence({
+            idle_since: Date.now(),
             game: gameConfig.prettyName
         });
 
+        console.log("Loaded Game: " + gameConfig.prettyName);
+
+        // 1 == game mode
         this.mode = 1;
     }
 
+    /*
+    * Ends the current game and cleans up the process for the game.
+    */
     closeGame(){
+        // cleanup the child process
         if(this.game && this.game.child){
             this.game.child.kill();
         }
 
+        // clear the game status in Discord
         this.bot.setPresence({
+            idle_since: Date.now(),
             game: ""
         });
 
+        // reset handler
         this.game = null;
         this.compiledOutput = "";
         this.mode = 0;
     }
 
     handleMessage(message){
+        // remove the first character, because we're only listening for
+        // commands that start with "$"
         var realMessage = message.substring(1, message.length);
 
         if(this.mode == 1 && this.game){
@@ -160,6 +200,9 @@ class MessageHandler{
 
         spliced = output.split(/[\n]|[\r]/);
 
+        // remove the first 2 and last 2 entries in this array, as they are
+        // junk data (they contain the user's input and the ">" prompt for their
+        // next input, which isn't needed in Discord)
         spliced.splice(0, 2);
         spliced.splice(-2, 2);
 
@@ -223,6 +266,8 @@ class MessageHandler{
                 output += curr;
             }
 
+            // Frotz uses carriage returns instead of newlines for some reason,
+            // so let's just stay consistent
             output += "\r";
         }
 
