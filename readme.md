@@ -1,5 +1,7 @@
 # Discord Text Adventure Bot
 
+[![Build Status](https://travis-ci.org/aeolingamenfel/discord-text-adventure-bot.svg?branch=master)](https://travis-ci.org/aeolingamenfel/discord-text-adventure-bot)
+
 This is a Node.js bot for [Discord](https://discordapp.com/) that allows you to
 play classic text adventures (such as Zork) in Discord. It is *not* hosted for
 you, so you will have to run it yourself.
