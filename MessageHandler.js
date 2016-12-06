@@ -13,6 +13,7 @@ class MessageHandler{
         this.mode = 0; // menu mode
         this.game = null;
         this.targetChannel = null;
+        this.compiledOutput = "";
     }
 
     onMessage(user, userID, channelID, message, event){
@@ -93,12 +94,18 @@ class MessageHandler{
     }
 
     loadGame(gameConfig){
-        this.game = {};
+        this.game = {
+            config: gameConfig
+        };
 
         this.game.child = spawn('frotz', [gameConfig.path]);
 
         this.game.child.stdout.on('data', (chunk) => {
             this.recievedGameOutput(chunk);
+        });
+
+        this.bot.setPresence({
+            game: gameConfig.prettyName
         });
 
         this.mode = 1;
@@ -109,7 +116,12 @@ class MessageHandler{
             this.game.child.kill();
         }
 
+        this.bot.setPresence({
+            game: ""
+        });
+
         this.game = null;
+        this.compiledOutput = "";
         this.mode = 0;
     }
 
@@ -131,7 +143,32 @@ class MessageHandler{
         var output = stripAnsi(_string);
         output = this.cleanUpOutput(output);
 
-        this.reply(output);
+        this.compiledOutput += _string;
+
+        // this marks the end of input
+        if(output.match(/(>\r)/)){
+
+            this.sendGameOutput();
+        }
+    }
+
+    sendGameOutput(){
+        var spliced, output = "", final = "";
+
+        output = stripAnsi(this.compiledOutput);
+        output = this.cleanUpOutput(output);
+
+        spliced = output.split(/[\n]|[\r]/);
+
+        spliced.splice(0, 2);
+        spliced.splice(-2, 2);
+
+        for(var x = 0; x < spliced.length; x++){
+            final += spliced[x] + "\r";
+        }
+
+        this.reply(final);
+        this.compiledOutput = "";
     }
 
     sendInfo(channelID){
