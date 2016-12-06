@@ -1,5 +1,6 @@
 const StringDecoder = require('string_decoder').StringDecoder;
 const decoder = new StringDecoder('utf8');
+var utf8 = require('utf8');
 
 var spawn = require('child_process').spawn;
 var stripAnsi = require('strip-ansi');
@@ -187,28 +188,16 @@ class MessageHandler{
 
         // this marks the end of input
         if(output.match(/(>\r)/)){
-
             this.sendGameOutput();
         }
     }
 
     sendGameOutput(){
-        var spliced, output = "", final = "";
+        var final = stripAnsi(utf8.encode(this.compiledOutput));
 
-        output = stripAnsi(this.compiledOutput);
-        output = this.cleanUpOutput(output);
+        final.replace("\r", "\n");
 
-        spliced = output.split(/[\n]|[\r]/);
-
-        // remove the first 2 and last 2 entries in this array, as they are
-        // junk data (they contain the user's input and the ">" prompt for their
-        // next input, which isn't needed in Discord)
-        spliced.splice(0, 2);
-        spliced.splice(-2, 2);
-
-        for(var x = 0; x < spliced.length; x++){
-            final += spliced[x] + "\r";
-        }
+        final = this.cleanUpOutput(final);
 
         this.reply(final);
         this.compiledOutput = "";
