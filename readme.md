@@ -29,6 +29,19 @@ You must also have [Node](https://nodejs.org/en/) and NPM installed.
 
 Once you have Frotz and Node installed, refer to the installation section.
 
+## Disclaimer for Windows Users
+
+Due to the implementation of the Frotz port on Windows, the bot cannot be run
+on Windows. The only existing workaround is the
+[Windows Linux Subsystem](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide)
+wherein you can run my bot from a Linux/Unix system in Windows, which will work
+properly. Please take a look at the link above for more information on using
+that system.
+
+On my list of things to do is a fork of Frotz specifically built for my bot,
+which would fix this problem, but in the meantime, Windows users are out of
+luck.
+
 ## Installation
 
 First, clone or download the latest version of the project from the Releases
