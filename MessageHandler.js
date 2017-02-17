@@ -14,6 +14,7 @@ class MessageHandler{
         this.mode = 0; // start in menu mode
         this.game = null;
         this.targetChannel = null;
+        this.listenChannel = null;
         this.compiledOutput = "";
     }
 
@@ -26,6 +27,18 @@ class MessageHandler{
 
         // we only accept messages that start with "$"
         if(!message || message.length < 1 || message[0] !== "$"){
+            return;
+        }
+
+        // Special case: listen for this on all channels.
+        // (Ensuring you can't lock yourself out.)
+        if(message.match(/^(\$adventureListenChannel)/)){
+            this.setListenChannel(channelID, true);
+            return;
+        }
+
+        // If a listen channel has been set, check the message is from it
+        if (this.listenChannel != null && this.listenChannel != channelID){
             return;
         }
 
@@ -109,6 +122,26 @@ class MessageHandler{
 
         if(notify){
             this.reply("Channel target set to this channel!", channelID);
+        }
+    }
+
+    /*
+    * Sets the channel to exclusively listen for commands on. If used again on
+    * that channel, disables the effect.
+    */
+    setListenChannel(channelID, notify = false){
+        if (this.listenChannel != channelID){
+            this.listenChannel = channelID;
+
+            if(notify){
+                this.reply("Commands now only accepted on this channel!", channelID);
+            }
+        }else{
+            this.listenChannel = null;
+
+            if(notify){
+                this.reply("Commands now accepted on all channels!", channelID);
+            }
         }
     }
 
