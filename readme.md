@@ -10,24 +10,41 @@ you, so you will have to run it yourself.
 
 ## Game Support
 
-This bot uses [Frotz](http://frotz.sourceforge.net/) as its interpreter for
-text adventure games, so anything that runs in/on Frotz can be run by this bot.
+This bot uses an implementation of [Frotz](http://frotz.sourceforge.net/) as its
+interpreter for text adventure games, called 
+[Dumb Frotz](https://github.com/DavidGriffith/frotz/blob/master/DUMB). So
+anything that runs in/on Frotz can be run by this bot.
 
 Generally speaking, that means any game with a `.z[number]` file extension.
 Please open an issue if you find a game that does not work well with this bot.
 
 ## How to Use
 
-You must have [Frotz](http://frotz.sourceforge.net/) installed on the machine
-that will run the bot, so that Frotz can be run from the command-line, IE:
+You must have 
+[Dumb Frotz](https://github.com/DavidGriffith/frotz/blob/master/DUMB) installed
+on the machine that will run the bot, so that Frotz can be run from the command
+line, IE:
 
 ```
-frotz /path/to/my/game.z5
+dfrotz /path/to/my/game.z5
 ```
+
+Please refer to the Installing Dumb Frotz section below for more details. 
 
 You must also have [Node](https://nodejs.org/en/) and NPM installed.
 
-Once you have Frotz and Node installed, refer to the installation section.
+Once you have Dumb Frotz and Node installed, refer to the installation section.
+
+### Installing Dumb Frotz
+
+If you are a Windows user, you have a pre-compiled version of `dfrotz` available
+[here](http://www.ifarchive.org/indexes/if-archiveXinfocomXinterpretersXfrotz.html)
+(see the `dfrotz.zip` file). All you have to do is add the `dfrotz.exe` file to 
+your PATH and you will be good to go!
+
+For macOS and Linux users, you'll need to manually compile the lastest version of 
+Frotz in its "dumb" mode. This is well documented on the
+[Frotz Github](https://github.com/DavidGriffith/frotz).
 
 ## Disclaimer for Windows Users
 
@@ -41,6 +58,12 @@ that system.
 On my list of things to do is a fork of Frotz specifically built for my bot,
 which would fix this problem, but in the meantime, Windows users are out of
 luck.
+
+*Developer Note:* This disclaimer *may* not longer be valid now that this 
+project has switched to Dumb Frotz. However, it has not yet been tested on 
+Windows. Please
+[drop me a line](https://github.com/aeolingamenfel/discord-text-adventure-bot/issues)
+if this is no longer the case and this disclaimer will be removed.
 
 ## Installation
 
@@ -84,6 +107,15 @@ Will cause the bot to print out its current state.
 Will set the target output channel to the channel in which this message was
 sent. You *must* set this before starting a game, or you will not see the
 output of the game.
+
+---
+
+#### $adventureListenChannel
+
+**Usage:** `$adventureListenChannel`
+
+Will set the channel that this command is typed in the be the *only* channel 
+that accepts commands for the bot. 
 
 ---
 

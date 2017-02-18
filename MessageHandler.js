@@ -156,7 +156,7 @@ class MessageHandler{
 
         // Create child process (we'll need to keep track of it in case we
         // need to kill it in the future.
-        this.game.child = spawn('frotz', [gameConfig.path]);
+        this.game.child = spawn('dfrotz', [gameConfig.path]);
 
         // Setup stream from frotz's stdout so that we can get its output
         this.game.child.stdout.on('data', (chunk) => {
@@ -230,7 +230,10 @@ class MessageHandler{
 
         final.replace("\r", "\n");
 
-        final = this.cleanUpOutput(final);
+        final = this.cleanUpOutput(final, true);
+
+        // lets also make the output monospace
+        final = "```\n" + final + "\n```";
 
         this.reply(final);
         this.compiledOutput = "";
@@ -275,22 +278,34 @@ class MessageHandler{
         }
     }
 
-    cleanUpOutput(raw){
+    cleanUpOutput(raw, forDisplay = false){
         var splitRaw = raw.split(/[\n]|[\r]/);
         var output = "";
 
         for(var x = 0; x < splitRaw.length; x++){
-            var curr = splitRaw[x];
-
-            if(curr[0] === "d"){
-                output += curr.substring(1, curr.length);
-            }else{
-                output += curr;
+            // if we're cleaning up the output for display, we can skip the last 
+            // line as it just contains the ">" prompt
+            if(forDisplay && x == splitRaw.length - 1) {
+                continue;
             }
 
-            // Frotz uses carriage returns instead of newlines for some reason,
-            // so let's just stay consistent
-            output += "\r";
+            var curr = splitRaw[x];
+
+            // For some reason, dfrotz on macOS outputs random dots here and 
+            // there...which we can just skip as far as I can tell
+            if(curr.trim() !== '.'){
+                if(curr[0] === "d") {
+                    output += curr.substring(1, curr.length).trim();
+                } else {
+                    output += curr.trim();
+                }
+            }
+
+            if(forDisplay) {
+                output += "\n";
+            } else {
+                output += "\r";
+            }
         }
 
         return output;
