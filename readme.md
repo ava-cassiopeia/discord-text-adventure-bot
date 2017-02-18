@@ -110,6 +110,15 @@ output of the game.
 
 ---
 
+#### $adventureListenChannel
+
+**Usage:** `$adventureListenChannel`
+
+Will set the channel that this command is typed in the be the *only* channel 
+that accepts commands for the bot. 
+
+---
+
 #### $start
 
 **Useage:** `$start [gameName]`
