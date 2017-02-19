@@ -53,7 +53,7 @@ class StorageManager {
     write() {
         const jsonData = JSON.stringify(this.data);
 
-        fs.writeFileSync(BASE_DIRECTORY + this.filename, jsonData, {flag: "wx"});
+        fs.writeFileSync(BASE_DIRECTORY + this.filename, jsonData, {flag: "w"});
     }
 
     /**
