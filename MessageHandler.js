@@ -29,7 +29,7 @@ class MessageHandler{
 
         // If this message starts with the comment prefix (and one is set)
         // ignore this message no matter what
-        if (this.commentPrefix.length > 0 && message.startsWith(this.commentPrefix)){
+        if (this.commentPrefix && this.commentPrefix !== "" && message.startsWith(this.commentPrefix)){
             return;
         }
 
