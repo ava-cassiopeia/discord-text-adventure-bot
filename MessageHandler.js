@@ -1,3 +1,4 @@
+const StorageManager = require("./utility/StorageManager");
 const StringDecoder = require('string_decoder').StringDecoder;
 const decoder = new StringDecoder('utf8');
 var utf8 = require('utf8');
@@ -18,6 +19,25 @@ class MessageHandler{
         this.compiledOutput = "";
         this.commandPrefix = appConfig.settings.commandPrefix;
         this.commentPrefix = appConfig.settings.commentPrefix;
+        this.storageManager = new StorageManager("main");
+
+        this.loadFromStorage();
+    }
+
+    /**
+     * Reads the storage manager for anything we can load from storage.
+     */
+    loadFromStorage() {
+        let targetChannel = this.storageManager.get("target.channel"),
+            listenChannel = this.storageManager.get("target.listen");
+
+        if(targetChannel) {
+            this.setTargetChannel(targetChannel, false, false);
+        }
+
+        if(listenChannel) {
+            this.setListenChannel(listenChannel, false, false);
+        }
     }
 
     onMessage(user, userID, channelID, message, event){
@@ -129,8 +149,12 @@ class MessageHandler{
     /*
     * Sets the default channel that is used by the reply() method.
     */
-    setTargetChannel(channelID, notify = false){
+    setTargetChannel(channelID, notify = false, doWrite = true){
         this.targetChannel = channelID;
+
+        if(doWrite) {
+            this.storageManager.set("target.channel", channelID);
+        }
 
         if(notify){
             this.reply("Channel target set to this channel!", channelID);
@@ -141,15 +165,23 @@ class MessageHandler{
     * Sets the channel to exclusively listen for commands on. If used again on
     * that channel, disables the effect.
     */
-    setListenChannel(channelID, notify = false){
+    setListenChannel(channelID, notify = false, doWrite = true){
         if (this.listenChannel != channelID){
             this.listenChannel = channelID;
+
+            if(doWrite) {
+                this.storageManager.set("target.listen", channelID);
+            }
 
             if(notify){
                 this.reply("Commands now only accepted on this channel!", channelID);
             }
         }else{
             this.listenChannel = null;
+
+            if(doWrite) {
+                this.storageManager.destroy("target.listen");
+            }
 
             if(notify){
                 this.reply("Commands now accepted on all channels!", channelID);
