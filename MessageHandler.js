@@ -44,7 +44,7 @@ class MessageHandler{
 
         // Special case: listen for this on all channels.
         // (Ensuring you can't lock yourself out.)
-        if(message.match(/^(adventureListenChannel)/)){
+        if(message.match(/^(adventureListenChannel)/i)){
             this.setListenChannel(channelID, true);
             return;
         }
@@ -54,17 +54,17 @@ class MessageHandler{
             return;
         }
 
-        if(message.match(/^(info)/)){
+        if(message.match(/^(info)/i)){
             this.sendInfo(channelID);
-        }else if(message.match(/^(targetChannel)/)){
+        }else if(message.match(/^(targetChannel)/i)){
             this.setTargetChannel(channelID, true);
-        }else if(message.match(/^(start)/)){
+        }else if(message.match(/^(start)/i)){
             if(this.mode == 0){
                 this.attemptToLoadGame(message);
             }else{
                 this.reply("You cannot load a game because a game is already running!");
             }
-        }else if(message.match(/^(quit)|^(q)$/)){
+        }else if(message.match(/^(quit)|^(q)$/i)){
             if(this.mode == 1){
                 this.closeGame();
 
@@ -72,7 +72,7 @@ class MessageHandler{
             }else{
                 this.reply("Nothing to exit from!");
             }
-        }else if(message.match(/^(save)/)){
+        }else if(message.match(/^(save)/i)){
             // disable saving for now
             this.reply("Saving is disabled for now.");
         }else{
