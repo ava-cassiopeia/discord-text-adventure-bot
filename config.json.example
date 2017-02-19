@@ -10,5 +10,9 @@
             "prettyName": "Example Name",
             "path": "/tmp/foobar.z5"
         }
-    ]
+    ],
+    "settings": {
+        "commandPrefix": "$",
+        "commentPrefix": "//"
+    }
 }

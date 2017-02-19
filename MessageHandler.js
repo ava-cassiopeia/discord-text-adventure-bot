@@ -17,6 +17,8 @@ class MessageHandler{
         this.targetChannel = null;
         this.listenChannel = null;
         this.compiledOutput = "";
+        this.commandPrefix = appConfig.settings.commandPrefix;
+        this.commentPrefix = appConfig.settings.commentPrefix;
         this.storageManager = new StorageManager("main");
 
         this.loadFromStorage();
@@ -45,14 +47,24 @@ class MessageHandler{
             return;
         }
 
-        // we only accept messages that start with "$"
-        if(!message || message.length < 1 || message[0] !== "$"){
+        // If this message starts with the comment prefix (and one is set)
+        // ignore this message no matter what
+        if (this.commentPrefix && this.commentPrefix !== "" && message.startsWith(this.commentPrefix)){
             return;
         }
 
+        // we only accept messages that start with the command prefix
+        if(!message || !message.startsWith(this.commandPrefix)){
+            return;
+        }
+
+        // Strip the command prefix now. This allows the rest of processing
+        // to be prefix agnostic.
+        message = message.slice(this.commandPrefix.length);
+
         // Special case: listen for this on all channels.
         // (Ensuring you can't lock yourself out.)
-        if(message.match(/^(\$adventureListenChannel)/)){
+        if(message.match(/^(adventureListenChannel)/i)){
             this.setListenChannel(channelID, true);
             return;
         }
@@ -62,17 +74,17 @@ class MessageHandler{
             return;
         }
 
-        if(message.match(/^(\$info)/)){
+        if(message.match(/^(info)/i)){
             this.sendInfo(channelID);
-        }else if(message.match(/^(\$targetChannel)/)){
+        }else if(message.match(/^(targetChannel)/i)){
             this.setTargetChannel(channelID, true);
-        }else if(message.match(/^(\$start)/)){
+        }else if(message.match(/^(start)/i)){
             if(this.mode == 0){
                 this.attemptToLoadGame(message);
             }else{
                 this.reply("You cannot load a game because a game is already running!");
             }
-        }else if(message.match(/^(\$quit)|^(\$q)/)){
+        }else if(message.match(/^(quit)|^(q)$/i)){
             if(this.mode == 1){
                 this.closeGame();
 
@@ -80,7 +92,7 @@ class MessageHandler{
             }else{
                 this.reply("Nothing to exit from!");
             }
-        }else if(message.match(/^(\$save)/)){
+        }else if(message.match(/^(save)/i)){
             // disable saving for now
             this.reply("Saving is disabled for now.");
         }else{
@@ -230,12 +242,8 @@ class MessageHandler{
     }
 
     handleMessage(message){
-        // remove the first character, because we're only listening for
-        // commands that start with "$"
-        var realMessage = message.substring(1, message.length);
-
         if(this.mode == 1 && this.game){
-            this.game.child.stdin.write(realMessage + "\n");
+            this.game.child.stdin.write(message + "\n");
         }
     }
 
@@ -276,7 +284,7 @@ class MessageHandler{
 
         if(!this.targetChannel){
             response += "*Target channel not set. Please set a target channel " +
-                "with `$targetChannel`!*\n";
+                "with `"+this.commandPrefix+"targetChannel`!*\n";
         }
 
         this.reply(response, channelID);
