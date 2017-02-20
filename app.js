@@ -27,3 +27,7 @@ bot.on('ready', function() {
 bot.on('message', function(user, userID, channelID, message, event) {
     messageHandler.onMessage(user, userID, channelID, message, event);
 });
+
+bot.on('disconnect', function(errMsg, code) {
+    bot.connect();
+});
