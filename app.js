@@ -22,6 +22,14 @@ process.on('exit', function(){
 
 bot.on('ready', function() {
     console.log(bot.username + " - (" + bot.id + ")");
+
+    // Set discord status
+    if (messageHandler.mode == 1 && messageHandler.game){
+        messageHandler.setBotOnline(messageHandler.game.config.prettyName);
+    }
+    else{
+        messageHandler.setBotIdle();
+    }
 });
 
 bot.on('message', function(user, userID, channelID, message, event) {
@@ -30,10 +38,4 @@ bot.on('message', function(user, userID, channelID, message, event) {
 
 bot.on('disconnect', function(errMsg, code) {
     bot.connect();
-    if (messageHandler.mode == 1 && messageHandler.game){
-        messageHandler.setBotOnline(messageHandler.game.config.prettyName);
-    }
-    else{
-        messageHandler.setBotIdle();
-    }
 });
