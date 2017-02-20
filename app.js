@@ -30,4 +30,10 @@ bot.on('message', function(user, userID, channelID, message, event) {
 
 bot.on('disconnect', function(errMsg, code) {
     bot.connect();
+    if (messageHandler.mode == 1 && messageHandler.game){
+        messageHandler.setBotOnline(messageHandler.game.config.prettyName);
+    }
+    else{
+        messageHandler.setBotIdle();
+    }
 });

@@ -24,10 +24,7 @@ class MessageHandler{
         this.loadFromStorage();
 
         // the the bot as idling until a game is loaded
-        this.bot.setPresence({
-            idle_since: Date.now(),
-            game: null
-        });
+        this.setBotIdle();
     }
 
     /**
@@ -215,12 +212,7 @@ class MessageHandler{
 
         // Try to set the game status of the bot to the current game (this
         // won't always succeed, depending on the bot's permissions)
-        this.bot.setPresence({
-            idle_since: null,
-            game:{
-                name: gameConfig.prettyName
-            }
-        });
+        this.setBotOnline(gameConfig.prettyName);
 
         console.log("Loaded Game: " + gameConfig.prettyName);
 
@@ -238,10 +230,7 @@ class MessageHandler{
         }
 
         // clear the game status in Discord
-        this.bot.setPresence({
-            idle_since: Date.now(),
-            game: null
-        });
+        this.setBotIdle();
 
         // reset handler
         this.game = null;
@@ -359,6 +348,21 @@ class MessageHandler{
         return output;
     }
 
+    setBotIdle(){
+        this.bot.setPresence({
+            idle_since: Date.now(),
+            game: null
+        });
+    }
+
+    setBotOnline(gameName){
+        this.bot.setPresence({
+            idle_since: null,
+            game:{
+                name: gameName
+            }
+        });
+    }
 }
 
 module.exports = MessageHandler;
