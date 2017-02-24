@@ -76,7 +76,8 @@ npm install
 
 After that, remove the `.example` from `config.json.example` and fill in the
 information inside that file accordingly. You will need to create a bot user to
-get the token.
+get the token. Refer to the "Creating a Bot User" section below for more
+information.
 
 Once your `config.json` file is set up, make sure that the bot user that you
 created is added to the Discord server where you want the bot to output to.
@@ -85,6 +86,33 @@ Then, run `node app.js` from project root to start the bot.
 
 If you set up everything correctly, the bot should be online in your server
 and ready to play. Refer to the Bot Commands section for more information.
+
+## Creating a Bot User
+
+To create a bot user, follow these steps: 
+
+1. Go to the [Discord site](https://discord.gg/) and sign in (or make an
+account)
+2. Once you are signed in, follow 
+[this link](https://discordapp.com/developers/applications/me) to get to the 
+developer page
+3. Click on the "My Apps" section on the left side (if you aren't already in 
+that section), and then click "New App" and setup your new app. This app will 
+wrap your bot user, so name it appropriately
+4. On the new app's page, click the "Create a Bot User" button
+5. Click the "click to reveal" button next to the Token section in the bot user 
+this is the token that you will use in the `api.discord.token` field in the 
+`config.json`
+
+That's all the steps to create your bot user. The last step required is adding 
+the bot user to your server, if you would like:
+
+To add the bot user, following the instructions [found here](http://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api).
+These instructions are for a python server but they apply just the same to your 
+bot as well. 
+
+After the bot user is added, you can boot up the application and interact with 
+it normally in your server.
 
 ## Bot Commands
 
