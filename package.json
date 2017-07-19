@@ -29,5 +29,6 @@
   "bugs": {
     "url": "https://github.com/aeolingamenfel/discord-text-adventure-bot/issues"
   },
-  "homepage": "https://github.com/aeolingamenfel/discord-text-adventure-bot#readme"
+  "homepage": "https://github.com/aeolingamenfel/discord-text-adventure-bot#readme",
+  "os": ["!win32", "!win64"]
 }
