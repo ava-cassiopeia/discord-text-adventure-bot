@@ -6,6 +6,33 @@ This is a Node.js bot for [Discord](https://discordapp.com/) that allows you to
 play classic text adventures (such as Zork) in Discord. It is *not* hosted for
 you, so you will have to run it yourself.
 
+---
+
+  - [Roadmap](#roadmap)
+  - [Game Support](#game-support)
+  - [How to Use](#how-to-use)
+    - [Installing Dumb Frotz](#installing-dumb-frotz)
+  - [Disclaimer for Windows Users](#disclaimer-for-windows-users)
+  - [Installation](#installation)
+  - [Creating a Bot User](#creating-a-bot-user)
+  - [Bot Commands](#bot-commands)
+    - [Get Bot Info](#get-bot-info)
+    - [Get Bot Help](#get-bot-help)
+    - [List Available Games](#list-available-games)
+    - [Set Target Output Channel](#set-target-output-channel)
+    - [Set Target Listening Channel](#set-target-listening-channel)
+    - [Start an Adventure](#start-an-adventure)
+    - [Quit an Adventure](#quit-an-adventure)
+  - [Issues, Bugs, Questions, Suggestions](#issues-bugs-questions-suggestions)
+
+## Roadmap
+
+This is a list of eventual upgrades that will be made to the project.
+
+  - [ ] Host the base bot code as a NPM project, so it can be installed as a NPM global command
+  - [ ] Ability to run multiple different games on different channels
+  - [ ] Ability to save state of game
+
 ## Game Support
 
 This bot uses an implementation of [Frotz](http://frotz.sourceforge.net/) as its
@@ -116,17 +143,25 @@ it normally in your server.
 
 The bot has a set of commands that can be run to load games and play.
 
----
-
-#### $info
+### Get Bot Info
 
 **Useage:** `$info`
 
 Will cause the bot to print out its current state.
 
----
+### Get Bot Help
 
-#### $targetChannel
+**Useage:** `$help`
+
+Prints out help information on how to use the bot.
+
+### List Available Games
+
+**Usage:** `$list`
+
+Lists all available games (based on your `config.json` file).
+
+### Set Target Output Channel
 
 **Useage:** `$targetChannel`
 
@@ -134,26 +169,20 @@ Will set the target output channel to the channel in which this message was
 sent. You *must* set this before starting a game, or you will not see the
 output of the game.
 
----
-
-#### $adventureListenChannel
+### Set Target Listening Channel
 
 **Usage:** `$adventureListenChannel`
 
 Will set the channel that this command is typed in the be the *only* channel
 that accepts commands for the bot.
 
----
-
-#### $start
+### Start an Adventure
 
 **Useage:** `$start [gameName]`
 
 Starts the specified gamename, which is the `name` specified in the config.json.
 
----
-
-#### $quit
+### Quit an Adventure
 
 **Useage:** `$quit` or `$q`
 
