@@ -30,5 +30,11 @@
     "url": "https://github.com/aeolingamenfel/discord-text-adventure-bot/issues"
   },
   "homepage": "https://github.com/aeolingamenfel/discord-text-adventure-bot#readme",
-  "os": ["!win32", "!win64"]
+  "os": [
+    "!win32",
+    "!win64"
+  ],
+  "bin": {
+    "discord-frotz": "./cli.js"
+  }
 }
