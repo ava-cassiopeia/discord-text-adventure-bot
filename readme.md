@@ -6,12 +6,10 @@ This is a Node.js bot for [Discord](https://discordapp.com/) that allows you to
 play classic text adventures (such as Zork) in Discord. It is *not* hosted for
 you, so you will have to run it yourself.
 
-![Bot Demonstration](https://static.ivanmattie.com/img/github/discord-text-adventure-bot/ZBJy77sNkz.gif "Bot Demonstration GIF")
-
 ## Game Support
 
 This bot uses an implementation of [Frotz](http://frotz.sourceforge.net/) as its
-interpreter for text adventure games, called 
+interpreter for text adventure games, called
 [Dumb Frotz](https://github.com/DavidGriffith/frotz/blob/master/DUMB). So
 anything that runs in/on Frotz can be run by this bot.
 
@@ -20,7 +18,7 @@ Please open an issue if you find a game that does not work well with this bot.
 
 ## How to Use
 
-You must have 
+You must have
 [Dumb Frotz](https://github.com/DavidGriffith/frotz/blob/master/DUMB) installed
 on the machine that will run the bot, so that Frotz can be run from the command
 line, IE:
@@ -29,7 +27,7 @@ line, IE:
 dfrotz /path/to/my/game.z5
 ```
 
-Please refer to the Installing Dumb Frotz section below for more details. 
+Please refer to the Installing Dumb Frotz section below for more details.
 
 You must also have [Node](https://nodejs.org/en/) and NPM installed.
 
@@ -39,10 +37,10 @@ Once you have Dumb Frotz and Node installed, refer to the installation section.
 
 If you are a Windows user, you have a pre-compiled version of `dfrotz` available
 [here](http://www.ifarchive.org/indexes/if-archiveXinfocomXinterpretersXfrotz.html)
-(see the `dfrotz.zip` file). All you have to do is add the `dfrotz.exe` file to 
+(see the `dfrotz.zip` file). All you have to do is add the `dfrotz.exe` file to
 your PATH and you will be good to go!
 
-For macOS and Linux users, you'll need to manually compile the lastest version of 
+For macOS and Linux users, you'll need to manually compile the lastest version of
 Frotz in its "dumb" mode. This is well documented on the
 [Frotz Github](https://github.com/DavidGriffith/frotz).
 
@@ -59,8 +57,8 @@ On my list of things to do is a fork of Frotz specifically built for my bot,
 which would fix this problem, but in the meantime, Windows users are out of
 luck.
 
-*Developer Note:* This disclaimer *may* not longer be valid now that this 
-project has switched to Dumb Frotz. However, it has not yet been tested on 
+*Developer Note:* This disclaimer *may* not longer be valid now that this
+project has switched to Dumb Frotz. However, it has not yet been tested on
 Windows. Please
 [drop me a line](https://github.com/aeolingamenfel/discord-text-adventure-bot/issues)
 if this is no longer the case and this disclaimer will be removed.
@@ -89,29 +87,29 @@ and ready to play. Refer to the Bot Commands section for more information.
 
 ## Creating a Bot User
 
-To create a bot user, follow these steps: 
+To create a bot user, follow these steps:
 
 1. Go to the [Discord site](https://discord.gg/) and sign in (or make an
 account)
-2. Once you are signed in, follow 
-[this link](https://discordapp.com/developers/applications/me) to get to the 
+2. Once you are signed in, follow
+[this link](https://discordapp.com/developers/applications/me) to get to the
 developer page
-3. Click on the "My Apps" section on the left side (if you aren't already in 
-that section), and then click "New App" and setup your new app. This app will 
+3. Click on the "My Apps" section on the left side (if you aren't already in
+that section), and then click "New App" and setup your new app. This app will
 wrap your bot user, so name it appropriately
 4. On the new app's page, click the "Create a Bot User" button
-5. Click the "click to reveal" button next to the Token section in the bot user 
-this is the token that you will use in the `api.discord.token` field in the 
+5. Click the "click to reveal" button next to the Token section in the bot user
+this is the token that you will use in the `api.discord.token` field in the
 `config.json`
 
-That's all the steps to create your bot user. The last step required is adding 
+That's all the steps to create your bot user. The last step required is adding
 the bot user to your server, if you would like:
 
 To add the bot user, following the instructions [found here](http://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api).
-These instructions are for a python server but they apply just the same to your 
-bot as well. 
+These instructions are for a python server but they apply just the same to your
+bot as well.
 
-After the bot user is added, you can boot up the application and interact with 
+After the bot user is added, you can boot up the application and interact with
 it normally in your server.
 
 ## Bot Commands
@@ -142,8 +140,8 @@ output of the game.
 
 **Usage:** `$adventureListenChannel`
 
-Will set the channel that this command is typed in the be the *only* channel 
-that accepts commands for the bot. 
+Will set the channel that this command is typed in the be the *only* channel
+that accepts commands for the bot.
 
 ---
 
