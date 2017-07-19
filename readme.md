@@ -32,7 +32,7 @@ you, so you will have to run it yourself.
 
 This is a list of eventual upgrades that will be made to the project.
 
-  - [ ] Host the base bot code as a NPM project, so it can be installed as a NPM global command
+  - [x] Host the base bot code as a NPM project, so it can be installed as a NPM global command
   - [ ] Ability to run multiple different games on different channels
   - [ ] Ability to save state of game
 
