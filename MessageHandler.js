@@ -6,19 +6,18 @@ var utf8 = require('utf8');
 var spawn = require('child_process').spawn;
 var stripAnsi = require('strip-ansi');
 
-const appConfig = require("./config.json");
-
 class MessageHandler{
 
-    constructor(bot){
+    constructor(bot, appConfig){
         this.bot = bot;
+        this.appConfig = appConfig;
         this.mode = 0; // start in menu mode
         this.game = null;
         this.targetChannel = null;
         this.listenChannel = null;
         this.compiledOutput = "";
-        this.commandPrefix = appConfig.settings.commandPrefix;
-        this.commentPrefix = appConfig.settings.commentPrefix;
+        this.commandPrefix = this.appConfig.settings.commandPrefix;
+        this.commentPrefix = this.appConfig.settings.commentPrefix;
         this.storageManager = new StorageManager("main");
 
         this.loadFromStorage();
@@ -290,14 +289,14 @@ class MessageHandler{
     }
         listGames(channelID){
         var response = "";
-                if(appConfig.games.length==0){
+                if(this.appConfig.games.length==0){
                         response = "No games found, remember to edit the config.json file";
                 }
 
         var x, current;
 
-        for(x = 0; x < appConfig.games.length; x++){
-            current = appConfig.games[x];
+        for(x = 0; x < this.appConfig.games.length; x++){
+            current = this.appConfig.games[x];
                         response+="**" + current.prettyName + "** started using name `" + current.name + "`\n";
         }
 
@@ -334,8 +333,8 @@ class MessageHandler{
     findGameConfig(name){
         var x, current;
 
-        for(x = 0; x < appConfig.games.length; x++){
-            current = appConfig.games[x];
+        for(x = 0; x < this.appConfig.games.length; x++){
+            current = this.appConfig.games[x];
 
             if(current.name === name){
                 return current;

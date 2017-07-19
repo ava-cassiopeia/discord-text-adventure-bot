@@ -14,6 +14,8 @@ you, so you will have to run it yourself.
     - [Installing Dumb Frotz](#installing-dumb-frotz)
   - [Disclaimer for Windows Users](#disclaimer-for-windows-users)
   - [Installation](#installation)
+    - [NPM Installation](#npm-installation)
+    - [Manual Installation](#manual-installation)
   - [Creating a Bot User](#creating-a-bot-user)
   - [Bot Commands](#bot-commands)
     - [Get Bot Info](#get-bot-info)
@@ -93,10 +95,36 @@ if this is no longer the case and this disclaimer will be removed.
 
 ## Installation
 
+See below for the two different methods on installing the actual bot. You can
+either install it from NPM or manually; whatever works for you best.
+
+### NPM Installation
+
+You can install the bot software from NPM. You'll still need to
+[install Dumb Frotz](#installing-dumb-frotz), but you can get the bot by running
+the following:
+
+```CLI
+npm i -g discord-frotz
+```
+
+Then, wherever you want, create a configuration file called
+`discord-frotz.config.json`, based on the `config.json.example` file available
+in this repository.
+
+Once the config file is created, just run `discort-frotz` from the same
+directory as the `discord-frotz.config.json` config file, and it will use that
+config file to start the bot.
+
+If you set up everything correctly, the bot should be online in your server
+and ready to play. Refer to the Bot Commands section for more information.
+
+### Manual Installation
+
 First, clone or download the latest version of the project from the Releases
 section here on Github. Then, `cd` to project root and install all dependencies:
 
-```
+```CLI
 npm install
 ```
 
