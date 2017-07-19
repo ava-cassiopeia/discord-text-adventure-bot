@@ -1,6 +1,4 @@
 const spawnClient = require("./client-spawner.js");
-const MessageHandler = require("./MessageHandler.js");
-var appConfig = require("./config.json");
-var Discord = require('discord.io');
+const appConfig = require("./config.json");
 
 spawnClient(appConfig);
