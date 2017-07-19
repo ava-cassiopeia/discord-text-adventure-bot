@@ -24,6 +24,7 @@ you, so you will have to run it yourself.
     - [Start an Adventure](#start-an-adventure)
     - [Quit an Adventure](#quit-an-adventure)
   - [Issues, Bugs, Questions, Suggestions](#issues-bugs-questions-suggestions)
+  - [Legal](#legal)
 
 ## Roadmap
 
@@ -195,3 +196,7 @@ If you find a bug, have an issue with the implementation, or just have a
 suggestion, please just open an issue. I'll try to respond to you as quickly
 as possible. Don't bother getting frustrated, I'll happily help you set up an
 instance of this bot if you get stuck.
+
+## Legal
+
+The name "Discord" is copyright and trademarked Discord Inc.
