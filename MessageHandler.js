@@ -79,6 +79,10 @@ class MessageHandler{
 
         if(message.match(/^(info)/i)){
             this.sendInfo(channelID);
+        }else if(message.match(/^(help)/i)){
+            this.sendHelp(channelID);
+        }else if(message.match(/^(list)/i)){
+            this.listGames(channelID);
         }else if(message.match(/^(targetChannel)/i)){
             this.setTargetChannel(channelID, true);
         }else if(message.match(/^(start)/i)){
@@ -132,7 +136,6 @@ class MessageHandler{
     */
     attemptToLoadGame(message){
         var split = message.split(" ");
-
         if(split.length < 2){
             this.reply("What game do you want to start?");
         }else{
@@ -200,7 +203,6 @@ class MessageHandler{
         this.game = {
             config: gameConfig
         };
-
         // Create child process (we'll need to keep track of it in case we
         // need to kill it in the future.
         this.game.child = spawn('dfrotz', [gameConfig.path]);
@@ -286,7 +288,49 @@ class MessageHandler{
 
         this.reply(response, channelID);
     }
+        listGames(channelID){
+        var response = "";
+                if(appConfig.games.length==0){
+                        response = "No games found, remember to edit the config.json file";
+                }
 
+        var x, current;
+
+        for(x = 0; x < appConfig.games.length; x++){
+            current = appConfig.games[x];
+                        response+="**" + current.prettyName + "** started using name `" + current.name + "`\n";
+        }
+
+
+
+        if(!this.targetChannel){
+            response += "*Target channel not set. Please set a target channel " +
+                "with `"+this.commandPrefix+"targetChannel`!*\n";
+        }
+
+        this.reply(response, channelID);
+    }
+
+        sendHelp(channelID){
+
+        var response = "**Commands:** \n"
+                                        + "`"+this.commandPrefix+"help` shows this menu\n"
+                                        + "`"+this.commandPrefix+"start [gameName]` will start a game\n"
+                                        + "`"+this.commandPrefix+"list` will display the list of games available for this bot\n"
+                                        + "`"+this.commandPrefix+"info` tells you which mode you're in\n"
+                                        + "`"+this.commandPrefix+"quit` or `$q` will quit the game\n"
+                    + "`"+this.commandPrefix+"targetChannel` will set the channel in which the messages are sent\n"
+                    + "`"+this.commandPrefix+"adventureListenChannel` to set the *only* channel which the bot will accept commands from\n"
+                                        + "Remember, once a game is started, start every command with `"+this.commandPrefix+"`. eg. `"+this.commandPrefix+"get lamp`\n"
+                                        + "You may need to send a random command right after a game is started to get it going.\n";
+
+        if(!this.targetChannel){
+            response += "*Target channel not set. Please set a target channel " +
+                "with `"+this.commandPrefix+"targetChannel`!*\n";
+        }
+
+        this.reply(response, channelID);
+    }
     findGameConfig(name){
         var x, current;
 
@@ -320,7 +364,7 @@ class MessageHandler{
         var output = "";
 
         for(var x = 0; x < splitRaw.length; x++){
-            // if we're cleaning up the output for display, we can skip the last 
+            // if we're cleaning up the output for display, we can skip the last
             // line as it just contains the ">" prompt
             if(forDisplay && x == splitRaw.length - 1) {
                 continue;
@@ -328,7 +372,7 @@ class MessageHandler{
 
             var curr = splitRaw[x];
 
-            // For some reason, dfrotz on macOS outputs random dots here and 
+            // For some reason, dfrotz on macOS outputs random dots here and
             // there...which we can just skip as far as I can tell
             if(curr.trim() !== '.'){
                 if(curr[0] === "d") {
