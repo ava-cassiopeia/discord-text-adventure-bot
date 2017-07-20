@@ -363,11 +363,16 @@ class MessageHandler{
         var output = "";
 
         for(var x = 0; x < splitRaw.length; x++){
-            // if we're cleaning up the output for display, we can skip the last
-            // line as it just contains the ">" prompt
-            if(forDisplay && x == splitRaw.length - 1) {
+            
+            var curr = splitRaw[x];
+
+            // if we're cleaning up the output for display, we can skip the last 
+            // line as it just contains the ">" prompt, unlessit contains other 
+            // characters
+            if(forDisplay && x == splitRaw.length - 1 && curr.match(/^[\s>]*$/)) {
                 continue;
             }
+            
 
             var curr = splitRaw[x];
 
