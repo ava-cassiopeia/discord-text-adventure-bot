@@ -287,20 +287,18 @@ class MessageHandler{
 
         this.reply(response, channelID);
     }
-        listGames(channelID){
+    listGames(channelID){
         var response = "";
-                if(this.appConfig.games.length==0){
-                        response = "No games found, remember to edit the config.json file";
-                }
+        if(this.appConfig.games.length==0){
+            response = "No games found, remember to edit the config.json file";
+        }
 
         var x, current;
 
         for(x = 0; x < this.appConfig.games.length; x++){
             current = this.appConfig.games[x];
-                        response+="**" + current.prettyName + "** started using name `" + current.name + "`\n";
+            response+="**" + current.prettyName + "** started using `" + this.commandPrefix + "start " + current.name + "`\n";
         }
-
-
 
         if(!this.targetChannel){
             response += "*Target channel not set. Please set a target channel " +
@@ -310,7 +308,7 @@ class MessageHandler{
         this.reply(response, channelID);
     }
 
-        sendHelp(channelID){
+    sendHelp(channelID){
 
         var response = "**Commands:** \n"
                                         + "`"+this.commandPrefix+"help` shows this menu\n"
