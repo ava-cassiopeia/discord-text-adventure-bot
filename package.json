@@ -1,6 +1,6 @@
 {
   "name": "discord-frotz",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "description": "A bot for using Discord as an interface for Text Adventure games",
   "main": "app.js",
   "scripts": {
