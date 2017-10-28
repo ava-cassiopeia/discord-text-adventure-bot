@@ -204,7 +204,7 @@ class MessageHandler{
         };
         // Create child process (we'll need to keep track of it in case we
         // need to kill it in the future.
-        this.game.child = spawn('dfrotz', ["-m", gameConfig.path]);
+        this.game.child = spawn('dfrotz', ["-p", gameConfig.path]);
 
         // Setup stream from frotz's stdout so that we can get its output
         this.game.child.stdout.on('data', (chunk) => {
