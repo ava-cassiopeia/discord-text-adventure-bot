@@ -4,7 +4,8 @@
   "description": "A bot for using Discord as an interface for Text Adventure games",
   "main": "app.js",
   "scripts": {
-    "test": "exit 0"
+    "test": "exit 0",
+    "start": "node ./app.js"
   },
   "keywords": [
     "text",
@@ -17,7 +18,7 @@
   "author": "Ivan Mattie",
   "license": "ISC",
   "dependencies": {
-    "discord.io": "^2.3.0",
+    "discord.io": "github:woor/discord.io#gateway_v6",
     "strip-ansi": "^3.0.1",
     "utf8": "^2.1.2"
   },

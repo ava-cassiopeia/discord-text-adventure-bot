@@ -13,7 +13,6 @@ you, so you will have to run it yourself.
   - [Game Support](#game-support)
   - [How to Use](#how-to-use)
     - [Installing Dumb Frotz](#installing-dumb-frotz)
-  - [Disclaimer for Windows Users](#disclaimer-for-windows-users)
   - [Installation](#installation)
     - [NPM Installation](#npm-installation)
     - [Manual Installation](#manual-installation)
@@ -75,25 +74,6 @@ For macOS and Linux users, you'll need to manually compile the lastest version o
 Frotz in its "dumb" mode. This is well documented on the
 [Frotz Github](https://github.com/DavidGriffith/frotz).
 
-## Disclaimer for Windows Users
-
-Due to the implementation of the Frotz port on Windows, the bot cannot be run
-on Windows. The only existing workaround is the
-[Windows Linux Subsystem](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide)
-wherein you can run my bot from a Linux/Unix system in Windows, which will work
-properly. Please take a look at the link above for more information on using
-that system.
-
-On my list of things to do is a fork of Frotz specifically built for my bot,
-which would fix this problem, but in the meantime, Windows users are out of
-luck.
-
-*Developer Note:* This disclaimer *may* not longer be valid now that this
-project has switched to Dumb Frotz. However, it has not yet been tested on
-Windows. Please
-[drop me a line](https://github.com/aeolingamenfel/discord-text-adventure-bot/issues)
-if this is no longer the case and this disclaimer will be removed.
-
 ## Installation
 
 See below for the two different methods on installing the actual bot. You can
@@ -137,7 +117,7 @@ information.
 Once your `config.json` file is set up, make sure that the bot user that you
 created is added to the Discord server where you want the bot to output to.
 
-Then, run `node app.js` from project root to start the bot.
+Then, run `node app.js` or `npm run start` from project root to start the bot.
 
 If you set up everything correctly, the bot should be online in your server
 and ready to play. Refer to the Bot Commands section for more information.
