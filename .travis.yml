@@ -3,3 +3,4 @@ before_script:
   - npm install -g mocha
 node_js:
   - "7"
+script: mocha
