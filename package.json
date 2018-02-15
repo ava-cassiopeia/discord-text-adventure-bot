@@ -2,10 +2,10 @@
   "name": "discord-frotz",
   "version": "0.13.0",
   "description": "A bot for using Discord as an interface for Text Adventure games",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "exit 0",
-    "start": "node ./app.js"
+    "start": "node ./src/app.js"
   },
   "keywords": [
     "text",
@@ -32,10 +32,9 @@
   },
   "homepage": "https://github.com/aeolingamenfel/discord-text-adventure-bot#readme",
   "os": [
-    "!win32",
-    "!win64"
+    "!win32"
   ],
   "bin": {
-    "discord-frotz": "./cli.js"
+    "discord-frotz": "./src/cli.js"
   }
 }

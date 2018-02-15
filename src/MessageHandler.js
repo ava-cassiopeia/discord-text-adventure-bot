@@ -1,4 +1,4 @@
-const StorageManager = require("./utility/StorageManager");
+const StorageManager = require("./../utility/StorageManager");
 const StringDecoder = require('string_decoder').StringDecoder;
 const decoder = new StringDecoder('utf8');
 var utf8 = require('utf8');
