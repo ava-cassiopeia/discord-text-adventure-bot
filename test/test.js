@@ -20,4 +20,70 @@ describe("MessageHandler", function() {
         assert.notEqual(bot.presenceState.idle_since, 0, "Bot idle since should be nonzero number of milliseconds");
     });
 
+    describe(".setBotOnline()", function() {
+        const bot = new DiscordClientMock();
+        const handler = new MessageHandler(bot, MOCK_CONFIG);
+
+        handler.setBotOnline("My Cool Game");
+
+        it("should the game name to the specified game name", function() {
+            assert.equal(bot.presenceState.game.name, "My Cool Game", "Game name should match what was passed in to method");
+        });
+
+        it("should reset the idle state", function() {
+            assert.equal(bot.presenceState.idle_since, null, "Idle since should be null since the state was just updated.");
+        });
+    });
+
+    describe(".setBotIdle()", function() {
+        const bot = new DiscordClientMock();
+        const handler = new MessageHandler(bot, MOCK_CONFIG);
+
+        handler.setBotOnline("Test");
+        handler.setBotIdle();
+
+        it("should set the idle since value to a non-zero number", function() {
+            assert.equal(typeof bot.presenceState.idle_since, "number", "The idle since value should be a number");
+            assert.notEqual(bot.presenceState.idle_since, 0, "The idle since value should be nonzero");
+        });
+
+        it("should clear the set game, if any", function() {
+            assert.equal(bot.presenceState.game, null, "The game name/state should be null");
+        });
+    });
+
+    describe(".cleanUpOutput()", function() {
+        const bot = new DiscordClientMock();
+        const handler = new MessageHandler(bot, MOCK_CONFIG);
+
+        it("should remove trailing > line", function() {
+            const result = handler.cleanUpOutput("Testing\n>", true);
+
+            assert.equal(result, "Testing\n", "Did not remove trailing > character");
+        });
+    });
+
+    describe(".getModeName()", function() {
+        const bot = new DiscordClientMock();
+        const handler = new MessageHandler(bot, MOCK_CONFIG);
+
+        it("should return Menu Mode for mode #0", function() {
+            const name = handler.getModeName(0);
+
+            assert.equal(name, "Menu Mode", "Result was not 'Menu Mode' for mode #0");
+        });
+
+        it("should return Game Mode for mode #1", function() {
+            const name = handler.getModeName(1);
+
+            assert.equal(name, "Game Mode", "Result was not 'Game Mode' for mode #1");
+        });
+
+        it("should return Unknown Mode for other passed numbers", function() {
+            const name = handler.getModeName(2);
+
+            assert.equal(name, "Unknown Mode", "Result was not 'Unknown Mode' for mode #2");
+        });
+    });
+
 });
