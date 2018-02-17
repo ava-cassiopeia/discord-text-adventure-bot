@@ -6,7 +6,14 @@ const MOCK_CONFIG = {
     settings: {
         commandPrefix: "$",
         commentPrefix: "!!"
-    }
+    },
+    games: [
+        {
+            name: "testGame",
+            prettyName: "Test Game",
+            path: "~"
+        }
+    ]
 };
 
 describe("MessageHandler", function() {
@@ -83,6 +90,24 @@ describe("MessageHandler", function() {
             const name = handler.getModeName(2);
 
             assert.equal(name, "Unknown Mode", "Result was not 'Unknown Mode' for mode #2");
+        });
+    });
+
+    describe(".findGameConfig()", function() {
+        const bot = new DiscordClientMock();
+        const handler = new MessageHandler(bot, MOCK_CONFIG);
+
+        it("should return false for a game that doesn't exist", function() {
+            assert.equal(handler.findGameConfig("badName"), false);
+        });
+
+        it("should return the full game config if it exists", function() {
+            const conf = handler.findGameConfig("testGame");
+
+            assert.equal(typeof conf, "object");
+            assert.equal(conf.name, "testGame");
+            assert.equal(conf.prettyName, "Test Game");
+            assert.equal(conf.path, "~");
         });
     });
 
