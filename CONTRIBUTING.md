@@ -7,7 +7,7 @@ appreciated.
 
 With that in mind, please follow the below steps to contribute:
 
-## 1. Fork, Clone, and Test
+## Fork, Clone, and Test
 
 Before you get started, make sure to fork the repository onto your own GitHub.
 This will allow you to make commits separate from the main repo, and submit a
@@ -35,7 +35,9 @@ start making tweaks.
 For the most part, how you write the code, and the function of the code, is up
 to you, however in terms of syntax, please generally follow the
 [Google Javascript Style Guide](https://google.github.io/styleguide/jsguide.html).
-This is not rigidly enforced, but should generally be followed.
+This is not rigidly enforced, but should generally be followed. The only main
+change from that style guide is you should use 4 space tabs instead of 2 space
+tabs.
 
 *Note:* In the future, there will be unit test requirements for the application,
 but for the time being, it is up to you to test that the functionality you added
