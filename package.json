@@ -1,6 +1,6 @@
 {
   "name": "discord-frotz",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "description": "A bot for using Discord as an interface for Text Adventure games",
   "main": "src/app.js",
   "scripts": {
@@ -34,9 +34,6 @@
     "url": "https://github.com/aeolingamenfel/discord-text-adventure-bot/issues"
   },
   "homepage": "https://github.com/aeolingamenfel/discord-text-adventure-bot#readme",
-  "os": [
-    "!win32"
-  ],
   "bin": {
     "discord-frotz": "./src/cli.js"
   }
