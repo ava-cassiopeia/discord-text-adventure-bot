@@ -40,7 +40,7 @@ This is a list of eventual upgrades that will be made to the project.
 
 This bot uses an implementation of [Frotz](http://frotz.sourceforge.net/) as its
 interpreter for text adventure games, called
-[Dumb Frotz](https://github.com/DavidGriffith/frotz/blob/master/DUMB). So
+[Dumb Frotz](https://gitlab.com/DavidGriffith/frotz/blob/master/DUMB). So
 anything that runs in/on Frotz can be run by this bot.
 
 Generally speaking, that means any game with a `.z[number]` file extension.
@@ -49,7 +49,7 @@ Please open an issue if you find a game that does not work well with this bot.
 ## How to Use
 
 You must have
-[Dumb Frotz](https://github.com/DavidGriffith/frotz/blob/master/DUMB) installed
+[Dumb Frotz](https://gitlab.com/DavidGriffith/frotz/blob/master/DUMB) installed
 on the machine that will run the bot, so that Frotz can be run from the command
 line, IE:
 
@@ -72,7 +72,7 @@ your PATH and you will be good to go!
 
 For macOS and Linux users, you'll need to manually compile the lastest version of
 Frotz in its "dumb" mode. This is well documented on the
-[Frotz Github](https://github.com/DavidGriffith/frotz).
+[Frotz GitLab page](https://gitlab.com/DavidGriffith/frotz).
 
 ## Installation
 
