@@ -2,3 +2,4 @@ node_modules/
 storage/
 .DS_Store
 config.json
+.vscode
