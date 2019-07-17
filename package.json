@@ -4,8 +4,10 @@
   "description": "A bot for using Discord as an interface for Text Adventure games",
   "main": "src/app.js",
   "scripts": {
-    "test": "mocha",
-    "start": "node ./src/app.js"
+    "test": "node_modules/.bin/mocha",
+    "start": "node ./src/app.js",
+    "lint": "node_modules/.bin/eslint src/*.js src/**/*.js utility/*.js",
+    "lint-fix": "node_modules/.bin/eslint src/*.js src/**/*.js utility/*.js --fix"
   },
   "keywords": [
     "text",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "assert": "^1.4.1",
+    "eslint": "^6.0.1",
     "mocha": "^5.0.1"
   },
   "repository": {

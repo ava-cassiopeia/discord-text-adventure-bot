@@ -25,6 +25,9 @@ you, so you will have to run it yourself.
     - [Set Target Listening Channel](#set-target-listening-channel)
     - [Start an Adventure](#start-an-adventure)
     - [Quit an Adventure](#quit-an-adventure)
+  - [Development](#development)
+    - [Tests](#tests)
+    - [Linting](#linting)
   - [Issues, Bugs, Questions, Suggestions](#issues-bugs-questions-suggestions)
   - [Legal](#legal)
 
@@ -198,6 +201,31 @@ Starts the specified gamename, which is the `name` specified in the config.json.
 
 Quits the current game. Will only work when in game mode (aka when a game has
 been started with the `$start` command).
+
+## Development
+
+### Tests
+
+Tests are written using [Mocha](https://mochajs.org/), and run with the
+following:
+
+```
+npm run test
+```
+
+### Linting
+
+Linting uses [eslint](https://eslint.org/) and is run with the following:
+
+```
+npm run lint
+```
+
+You can also run eslint with the automated `--fix` flag using:
+
+```
+npm run lint-fix
+```
 
 ## Issues, Bugs, Questions, Suggestions
 
