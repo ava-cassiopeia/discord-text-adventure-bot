@@ -25,6 +25,9 @@ you, so you will have to run it yourself.
     - [Set Target Listening Channel](#set-target-listening-channel)
     - [Start an Adventure](#start-an-adventure)
     - [Quit an Adventure](#quit-an-adventure)
+  - [Development](#development)
+    - [Tests](#tests)
+    - [Linting](#linting)
   - [Issues, Bugs, Questions, Suggestions](#issues-bugs-questions-suggestions)
   - [Legal](#legal)
 
