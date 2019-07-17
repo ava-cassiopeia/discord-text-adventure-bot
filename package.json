@@ -5,7 +5,9 @@
   "main": "src/app.js",
   "scripts": {
     "test": "mocha",
-    "start": "node ./src/app.js"
+    "start": "node ./src/app.js",
+    "lint": "eslint src/*.js src/**/*.js",
+    "lint-fix": "eslint src/*.js src/**/*.js --fix"
   },
   "keywords": [
     "text",
