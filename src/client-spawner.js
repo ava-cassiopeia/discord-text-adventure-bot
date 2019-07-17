@@ -8,7 +8,7 @@ module.exports = function(appConfig) {
     autorun: true
   });
 
-    // Handler that will take messages and pass them through to Frotz
+  // Handler that will take messages and pass them through to Frotz
   var messageHandler = new MessageHandler(bot, appConfig);
 
   process.on("exit", function(){
