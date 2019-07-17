@@ -6,8 +6,8 @@
   "scripts": {
     "test": "node_modules/.bin/mocha",
     "start": "node ./src/app.js",
-    "lint": "node_modules/.bin/eslint src/*.js src/**/*.js",
-    "lint-fix": "node_modules/.bin/eslint src/*.js src/**/*.js --fix"
+    "lint": "node_modules/.bin/eslint src/*.js src/**/*.js utility/*.js",
+    "lint-fix": "node_modules/.bin/eslint src/*.js src/**/*.js utility/*.js --fix"
   },
   "keywords": [
     "text",
