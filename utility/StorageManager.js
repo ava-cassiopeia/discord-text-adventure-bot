@@ -11,8 +11,8 @@ const BASE_DIRECTORY = __dirname + "/../storage/";
 class StorageManager {
 
   /**
-     * @param {string} filename filename wherein to store/read data
-     */
+   * @param {string} filename filename wherein to store/read data
+   */
   constructor(filename) {
     this.filename = filename + ".json";
     this.data = {};
@@ -29,8 +29,8 @@ class StorageManager {
   }
 
   /**
-     * Makes sure that the storage/ directory exists before writing to it.
-     */
+   * Makes sure that the storage/ directory exists before writing to it.
+   */
   ensureStorage() {
     if (!fs.existsSync(BASE_DIRECTORY)){
       fs.mkdirSync(BASE_DIRECTORY);
@@ -38,18 +38,18 @@ class StorageManager {
   }
 
   /**
-     * Called automatically when we successfully recieved data from the file 
-     * system.
-     * 
-     * @param {string} rawData the raw data as a JSON string
-     */
+   * Called automatically when we successfully recieved data from the file 
+   * system.
+   * 
+   * @param {string} rawData the raw data as a JSON string
+   */
   dataRecieved(rawData) {
     this.data = JSON.parse(rawData);
   }
 
   /**
-     * Writes out the data to the file in JSON format.
-     */
+   * Writes out the data to the file in JSON format.
+   */
   write() {
     const jsonData = JSON.stringify(this.data);
 
@@ -57,14 +57,14 @@ class StorageManager {
   }
 
   /**
-     * Sets a specific key to a specific value (can be retrieved later with the 
-     * get() method).
-     * 
-     * @param {string} key the key used to retrieve the value later
-     * 
-     * @param {mixed} value the value to store; can be anything that can be 
-     * turned into JSON
-     */
+   * Sets a specific key to a specific value (can be retrieved later with the 
+   * get() method).
+   * 
+   * @param {string} key the key used to retrieve the value later
+   * 
+   * @param {mixed} value the value to store; can be anything that can be 
+   * turned into JSON
+   */
   set(key, value) {
     this.data[key] = value;
 
@@ -74,20 +74,20 @@ class StorageManager {
   }
 
   /**
-     * Retrieves a specific value by its key, or `undefined` if there's nothing 
-     * with that key.
-     * 
-     * @param {string} key the key for the value to retrieve
-     */
+   * Retrieves a specific value by its key, or `undefined` if there's nothing 
+   * with that key.
+   * 
+   * @param {string} key the key for the value to retrieve
+   */
   get(key) {
     return this.data[key];
   }
 
   /**
-     * Destroys any value if it is paired with the given key. 
-     * 
-     * @param {string} key the key for the value to delete
-     */
+   * Destroys any value if it is paired with the given key. 
+   * 
+   * @param {string} key the key for the value to delete
+   */
   destroy(key) {
     if(this.data[key]) {
       delete this.data[key];

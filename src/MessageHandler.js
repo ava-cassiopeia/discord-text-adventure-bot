@@ -27,9 +27,9 @@ class MessageHandler{
   }
 
   /**
-     * Reads the storage manager for anything we can load from storage that 
-     * the user previously configured.
-     */
+   * Reads the storage manager for anything we can load from storage that 
+   * the user previously configured.
+   */
   loadFromStorage() {
     let targetChannel = this.storageManager.get("target.channel"),
       listenChannel = this.storageManager.get("target.listen");
@@ -44,18 +44,18 @@ class MessageHandler{
   }
 
   /**
-     * Called automatically when the bot hears a message from any channel that 
-     * it has access to.
-     * 
-     * @param {Object} user An object representing the Discord user that sent 
-     *  the message.
-     * @param {Integer} userID The ID of the user that sent the message.
-     * @param {Integer} channelID The ID of the channel that the messge was sent
-     *  to.
-     * @param {String} message The actual message that was sent.
-     * @param {Object} event A catchall event object with more information about 
-     *  the message that was sent.
-     */
+   * Called automatically when the bot hears a message from any channel that 
+   * it has access to.
+   * 
+   * @param {Object} user An object representing the Discord user that sent 
+   *  the message.
+   * @param {Integer} userID The ID of the user that sent the message.
+   * @param {Integer} channelID The ID of the channel that the messge was sent
+   *  to.
+   * @param {String} message The actual message that was sent.
+   * @param {Object} event A catchall event object with more information about 
+   *  the message that was sent.
+   */
   onMessage(user, userID, channelID, message, event) {
     // message event will be called even on the bot's messages, so we
     // create this base-case to skip any message from the bot itself
@@ -66,8 +66,8 @@ class MessageHandler{
     // If this message starts with the comment prefix (and one is set)
     // ignore this message no matter what
     if (this.commentPrefix 
-                && this.commentPrefix !== "" 
-                && message.startsWith(this.commentPrefix)) {
+        && this.commentPrefix !== "" 
+        && message.startsWith(this.commentPrefix)) {
       return;
     }
 
@@ -125,16 +125,16 @@ class MessageHandler{
   }
 
   /**
-     * Automatically sends the specified message either to the default channel
-     * (if no channel is specified) or the specified channel. If there is no
-     * default channel set, and a channelID is not specified, then no message
-     * will be sent.
-     * 
-     * @param {String} message The message to be sent.
-     * 
-     * @param {Integer} channelID (Optional) The ID of the channel to send the
-     *  reply message to.
-     */
+   * Automatically sends the specified message either to the default channel
+   * (if no channel is specified) or the specified channel. If there is no
+   * default channel set, and a channelID is not specified, then no message
+   * will be sent.
+   * 
+   * @param {String} message The message to be sent.
+   * 
+   * @param {Integer} channelID (Optional) The ID of the channel to send the
+   *  reply message to.
+   */
   reply(message, channelID) {
     if(!channelID) {
       if(this.targetChannel) {
@@ -151,12 +151,12 @@ class MessageHandler{
   }
 
   /**
-     * Attempts to load a game based on the given user message. If no game is
-     * found, the default channel will be notified.
-     * 
-     * @param {String} message The user message that was sent along with the 
-     *  load command.
-     */
+   * Attempts to load a game based on the given user message. If no game is
+   * found, the default channel will be notified.
+   * 
+   * @param {String} message The user message that was sent along with the 
+   *  load command.
+   */
   attemptToLoadGame(message) {
     var split = message.split(" ");
 
@@ -177,18 +177,18 @@ class MessageHandler{
   }
 
   /**
-     * Sets the default channel that is used by the reply() method.
-     * 
-     * @param {Integer} channelID The ID of the channel to set as the default
-     *  target channel.
-     * 
-     * @param {Boolean} notify Optional, defaults to false. If true, will
-     *  attempt to send a message to the new channel saying it was set.
-     * 
-     * @param {Boolean} doWrite Optional, defaults to true. If true, will 
-     *  store the set channel in the config file so the bot will default to that
-     *  channel the next time it boots up.
-     */
+   * Sets the default channel that is used by the reply() method.
+   * 
+   * @param {Integer} channelID The ID of the channel to set as the default
+   *  target channel.
+   * 
+   * @param {Boolean} notify Optional, defaults to false. If true, will
+   *  attempt to send a message to the new channel saying it was set.
+   * 
+   * @param {Boolean} doWrite Optional, defaults to true. If true, will 
+   *  store the set channel in the config file so the bot will default to that
+   *  channel the next time it boots up.
+   */
   setTargetChannel(channelID, notify = false, doWrite = true) {
     this.targetChannel = channelID;
 
@@ -202,19 +202,19 @@ class MessageHandler{
   }
 
   /**
-     * Sets the channel to exclusively listen for commands on. If used again on
-     * that channel, disables the effect.
-     * 
-     * @param {Integer} channelID The channel to exclusively listen to.
-     * 
-     * @param {Boolean} notify Optional, defaults to false. If true, will 
-     *  send a message to the channel specified with the channelID saying that 
-     *  it has been set as the listen channel.
-     * 
-     * @param {Boolean} doWrite Optional, defaults to true. If true, will store 
-     *  the listen channel with the storage manager in case the bot is shut 
-     *  down.
-     */
+   * Sets the channel to exclusively listen for commands on. If used again on
+   * that channel, disables the effect.
+   * 
+   * @param {Integer} channelID The channel to exclusively listen to.
+   * 
+   * @param {Boolean} notify Optional, defaults to false. If true, will 
+   *  send a message to the channel specified with the channelID saying that 
+   *  it has been set as the listen channel.
+   * 
+   * @param {Boolean} doWrite Optional, defaults to true. If true, will store 
+   *  the listen channel with the storage manager in case the bot is shut 
+   *  down.
+   */
   setListenChannel(channelID, notify = false, doWrite = true) {
     if (this.listenChannel != channelID) {
       this.listenChannel = channelID;
@@ -240,9 +240,9 @@ class MessageHandler{
   }
 
   /**
-     * Loads and starts the game specified by the given game config. This game
-     * config should usuially come from the appConfig file.
-     */
+   * Loads and starts the game specified by the given game config. This game
+   * config should usuially come from the appConfig file.
+   */
   loadGame(gameConfig) {
     this.game = {
       config: gameConfig
@@ -268,8 +268,8 @@ class MessageHandler{
   }
 
   /*
-    * Ends the current game and cleans up the process for the game.
-    */
+  * Ends the current game and cleans up the process for the game.
+  */
   closeGame(){
     // cleanup the child process
     if(this.game && this.game.child){
