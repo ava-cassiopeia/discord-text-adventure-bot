@@ -199,6 +199,31 @@ Starts the specified gamename, which is the `name` specified in the config.json.
 Quits the current game. Will only work when in game mode (aka when a game has
 been started with the `$start` command).
 
+## Development
+
+### Tests
+
+Tests are written using [Mocha](https://mochajs.org/), and run with the
+following:
+
+```
+npm run test
+```
+
+### Linting
+
+Linting uses [eslint](https://eslint.org/) and is run with the following:
+
+```
+npm run lint
+```
+
+You can also run eslint with the automated `--fix` flag using:
+
+```
+npm run lint-fix
+```
+
 ## Issues, Bugs, Questions, Suggestions
 
 If you find a bug, have an issue with the implementation, or just have a
