@@ -1,18 +1,8 @@
 class DiscordClientMock {
 
   constructor() {
-    this.presenceState = {};
+    this.user = new DiscordUserMock();
     this.lastMessage = null;
-  }
-
-  /**
-   * Mock method for setting the bot's precense state. Just records the state
-   * to be observed by unit tests.
-   * 
-   * @param {Object} state
-   */
-  setPresence(state) {
-    this.presenceState = state;
   }
 
   /**
@@ -25,6 +15,22 @@ class DiscordClientMock {
     this.lastMessage = config;
   }
 
+}
+
+class DiscordUserMock {
+  constructor() {
+    this.presenceState = null;
+  }
+
+  /**
+   * Mock method for setting the users's precense state. Just records the state
+   * to be observed by unit tests.
+   * 
+   * @param {Object} state
+   */
+  setPresence(state) {
+    this.presenceState = state;
+  }
 }
 
 module.exports = DiscordClientMock;
