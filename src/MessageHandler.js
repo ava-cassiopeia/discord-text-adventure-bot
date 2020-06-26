@@ -6,7 +6,7 @@ var utf8 = require("utf8");
 var spawn = require("child_process").spawn;
 var stripAnsi = require("strip-ansi");
 
-class MessageHandler{
+class MessageHandler {
 
   constructor(bot, appConfig) {
     this.bot = bot;
