@@ -5,7 +5,7 @@ module.exports = function(appConfig) {
   const client = new Discord.Client();
 
   // Handler that will take messages and pass them through to Frotz
-  const messageHandler = new MessageHandler(bot, appConfig);
+  const messageHandler = new MessageHandler(client, appConfig);
 
   client.login(appConfig.api.discord.token);
 
@@ -29,7 +29,7 @@ module.exports = function(appConfig) {
   });
 
   client.on("message", (message) => {
-    messageHandler.onMessage(message.author, message.channel, message);
+    messageHandler.onMessage(message);
   });
 
   client.on("disconnect", () => {
