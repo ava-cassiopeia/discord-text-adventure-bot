@@ -3,9 +3,8 @@ const Discord = require("discord.js");
 
 module.exports = function(appConfig) {
   const client = new Discord.Client();
-
   // Handler that will take messages and pass them through to Frotz
-  const messageHandler = new MessageHandler(client, appConfig);
+  let messageHandler = null;
 
   client.login(appConfig.api.discord.token);
 
@@ -20,6 +19,7 @@ module.exports = function(appConfig) {
 
   client.once("ready", () => {
     console.log(`Logged in as ${client.user.username} (${client.user.id})`);
+    messageHandler = new MessageHandler(client, appConfig);
 
     if (messageHandler.mode == 1 && messageHandler.game) {
       messageHandler.setBotOnline(messageHandler.game.config.prettyName);

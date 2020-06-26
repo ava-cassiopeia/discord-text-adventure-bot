@@ -27,25 +27,26 @@ class MessageHandler {
     this.storageManager = new StorageManager("main");
 
     this.loadFromStorage();
-
-    // the the bot as idling until a game is loaded
-    this.setBotIdle();
   }
 
   /**
    * Reads the storage manager for anything we can load from storage that 
    * the user previously configured.
    */
-  loadFromStorage() {
-    let targetChannel = this.storageManager.get("target.channel"),
-      listenChannel = this.storageManager.get("target.listen");
+  async loadFromStorage() {
+    let targetChannelId = this.storageManager.get("target.channel"),
+      listenChannelId = this.storageManager.get("target.listen");
 
-    if(targetChannel) {
+    if(targetChannelId) {
+      const targetChannel = await this.client.channels.fetch(targetChannelId);
       this.setTargetChannel(targetChannel, false, false);
+      console.log("Loaded target channel.");
     }
 
-    if(listenChannel) {
+    if(listenChannelId) {
+      const listenChannel = await this.client.channels.fetch(listenChannelId);
       this.setListenChannel(listenChannel, false, false);
+      console.log("Loaded listen channel.");
     }
   }
 
@@ -94,13 +95,13 @@ class MessageHandler {
     }
 
     if(messageContent.match(/^(info)/i)) {
-      this.sendInfo(channel);
+      this.sendInfo(message.channel);
     }else if(messageContent.match(/^(help)/i)) {
-      this.sendHelp(channel);
+      this.sendHelp(message.channel);
     }else if(messageContent.match(/^(list)/i)) {
-      this.listGames(channel);
+      this.listGames(message.channel);
     }else if(messageContent.match(/^(targetChannel)/i)) {
-      this.setTargetChannel(channel, true);
+      this.setTargetChannel(message.channel, true);
     }else if(messageContent.match(/^(start)/i)) {
       if(this.mode == 0) {
         this.attemptToLoadGame(messageContent);
@@ -132,17 +133,16 @@ class MessageHandler {
    * will be sent.
    * 
    * @param {string} message The message to be sent.
-   * 
    * @param {import('discord.js').TextChannel} channel (Optional) The channel to
    * send the reply message to.
    */
   reply(message, channel = null) {
-    if(channel == null) {
-      if(this.targetChannel) {
-        channel = this.targetChannel;
-      } else {
-        return;
-      }
+    if (channel == null && !this.targetChannel) {
+      return;
+    }
+
+    if (channel == null) {
+      channel = this.targetChannel;
     }
 
     channel.send(message);
@@ -160,17 +160,18 @@ class MessageHandler {
 
     if(split.length < 2) {
       this.reply("What game do you want to start?");
+      return;
+    }
+
+    var gameName = split[1].trim();
+    var gameConfig = this.findGameConfig(gameName);
+
+    if(gameConfig) {
+      this.reply("Nice, loading " + gameConfig.prettyName + "!");
+
+      this.loadGame(gameConfig);
     } else {
-      var gameName = split[1].trim();
-      var gameConfig = this.findGameConfig(gameName);
-
-      if(gameConfig) {
-        this.reply("Nice, loading " + gameConfig.prettyName + "!");
-
-        this.loadGame(gameConfig);
-      } else {
-        this.reply("There is no game by that name!");
-      }
+      this.reply("There is no game by that name!");
     }
   }
 
@@ -213,7 +214,7 @@ class MessageHandler {
    *  down.
    */
   setListenChannel(channel, notify = false, doWrite = true) {
-    if (this.listenChannel.id != channel.id) {
+    if (this.listenChannel == null || this.listenChannel.id != channel.id) {
       this.listenChannel = channel;
 
       if(doWrite) {
@@ -303,7 +304,7 @@ class MessageHandler {
       return;
     }
 
-    const output = stripAnsi(_string);
+    let output = stripAnsi(_string);
     output = this.cleanUpOutput(output);
 
     this.compiledOutput += _string;
