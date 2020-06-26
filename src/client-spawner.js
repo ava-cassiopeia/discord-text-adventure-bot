@@ -1,42 +1,40 @@
 const MessageHandler = require("./MessageHandler.js");
-const Discord = require("discord.io");
+const Discord = require("discord.js");
 
 module.exports = function(appConfig) {
-  // Create Discord Bot (based on token in config)
-  var bot = new Discord.Client({
-    token: appConfig.api.discord.token,
-    autorun: true
-  });
-
+  const client = new Discord.Client();
   // Handler that will take messages and pass them through to Frotz
-  var messageHandler = new MessageHandler(bot, appConfig);
+  let messageHandler = null;
+
+  client.login(appConfig.api.discord.token);
 
   process.on("exit", function(){
     // gracefully clean up connection to Discord
-    bot.disconnect();
+    client.destroy();
 
     // we need to close the game so there is not a lingering child process
     // running in the background
     messageHandler.closeGame();
   });
 
-  bot.on("ready", function() {
-    console.log(bot.username + " - (" + bot.id + ")");
+  client.once("ready", () => {
+    console.log(`Logged in as ${client.user.username} (${client.user.id})`);
+    messageHandler = new MessageHandler(client, appConfig);
 
-    // Set discord status
-    if (messageHandler.mode == 1 && messageHandler.game){
+    if (messageHandler.mode == 1 && messageHandler.game) {
       messageHandler.setBotOnline(messageHandler.game.config.prettyName);
-    }
-    else{
+    } else {
       messageHandler.setBotIdle();
     }
   });
 
-  bot.on("message", function(user, userID, channelID, message, event) {
-    messageHandler.onMessage(user, userID, channelID, message, event);
+  client.on("message", (message) => {
+    messageHandler.onMessage(message);
   });
 
-  bot.on("disconnect", function(errMsg, code) {
-    bot.connect();
+  client.on("disconnect", () => {
+    // we need to close the game so there is not a lingering child process
+    // running in the background
+    messageHandler.closeGame();
   });
 };
