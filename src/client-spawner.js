@@ -1,5 +1,6 @@
 const MessageHandler = require("./MessageHandler.js");
 const Discord = require("discord.js");
+const Logger = require("./Logger.js");
 
 module.exports = function(appConfig) {
   const client = new Discord.Client();
@@ -19,7 +20,7 @@ module.exports = function(appConfig) {
 
   client.once("ready", () => {
     console.log(`Logged in as ${client.user.username} (${client.user.id})`);
-    messageHandler = new MessageHandler(client, appConfig);
+    messageHandler = new MessageHandler(client, new Logger(), appConfig);
 
     if (messageHandler.mode == 1 && messageHandler.game) {
       messageHandler.setBotOnline(messageHandler.game.config.prettyName);

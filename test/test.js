@@ -1,6 +1,8 @@
 const assert = require('assert');
 const MessageHandler = require("./../src/MessageHandler");
 const DiscordClientMock = require("./DiscordClientMock");
+const fs = require("fs");
+const {FakeLogger} = require("./LoggerMock");
 
 const MOCK_CONFIG = {
   settings: {
@@ -20,7 +22,7 @@ describe("MessageHandler", function() {
 
   describe(".setBotOnline()", function() {
     const bot = new DiscordClientMock();
-    const handler = new MessageHandler(bot, MOCK_CONFIG);
+    const handler = new MessageHandler(bot, new FakeLogger(), MOCK_CONFIG);
 
     handler.setBotOnline("My Cool Game");
 
@@ -35,7 +37,7 @@ describe("MessageHandler", function() {
 
   describe(".setBotIdle()", function() {
     const bot = new DiscordClientMock();
-    const handler = new MessageHandler(bot, MOCK_CONFIG);
+    const handler = new MessageHandler(bot, new FakeLogger(), MOCK_CONFIG);
 
     handler.setBotOnline("Test");
     handler.setBotIdle();
@@ -47,7 +49,7 @@ describe("MessageHandler", function() {
 
   describe(".cleanUpOutput()", function() {
     const bot = new DiscordClientMock();
-    const handler = new MessageHandler(bot, MOCK_CONFIG);
+    const handler = new MessageHandler(bot, new FakeLogger(), MOCK_CONFIG);
 
     it("should remove trailing > line", function() {
       const result = handler.cleanUpOutput("Testing\n>", true);
@@ -58,7 +60,7 @@ describe("MessageHandler", function() {
 
   describe(".getModeName()", function() {
     const bot = new DiscordClientMock();
-    const handler = new MessageHandler(bot, MOCK_CONFIG);
+    const handler = new MessageHandler(bot, new FakeLogger(), MOCK_CONFIG);
 
     it("should return Menu Mode for mode #0", function() {
       const name = handler.getModeName(0);
@@ -81,7 +83,7 @@ describe("MessageHandler", function() {
 
   describe(".findGameConfig()", function() {
     const bot = new DiscordClientMock();
-    const handler = new MessageHandler(bot, MOCK_CONFIG);
+    const handler = new MessageHandler(bot, new FakeLogger(), MOCK_CONFIG);
 
     it("should return false for a game that doesn't exist", function() {
       assert.equal(handler.findGameConfig("badName"), false);
@@ -94,6 +96,42 @@ describe("MessageHandler", function() {
       assert.equal(conf.name, "testGame");
       assert.equal(conf.prettyName, "Test Game");
       assert.equal(conf.path, "~");
+    });
+  });
+
+  describe(".loadGame()", () => {
+    const bot = new DiscordClientMock();
+    const handler = new MessageHandler(bot, new FakeLogger(), MOCK_CONFIG);
+
+    it("should print out an error and not load if the game file doesn't exist", () => {
+      const channel = bot.mockChannel();
+      handler.targetChannel = channel;
+
+      handler.loadGame({
+        path: "foo/bar.z5"
+      });
+
+      assert.equal(handler.mode, 0);
+      assert.equal(
+        channel.lastMessage,
+        "Tried to locate game file on server, but failed. See server logs for more details.");
+    });
+
+    it("should load normally if a file exists", () => {
+      const channel = bot.mockChannel();
+      handler.targetChannel = channel;
+      fs.writeFileSync("test.z5", "abcdef");
+
+      handler.loadGame({
+        path: "test.z5"
+      });
+      const mode = handler.mode;
+      const message = channel.lastMessage;
+
+      handler.closeGame();
+      fs.unlinkSync("test.z5");
+
+      assert.equal(mode, 1);
     });
   });
 
