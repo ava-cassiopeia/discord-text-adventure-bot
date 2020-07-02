@@ -116,23 +116,6 @@ describe("MessageHandler", function() {
         channel.lastMessage,
         "Tried to locate game file on server, but failed. See server logs for more details.");
     });
-
-    it("should load normally if a file exists", () => {
-      const channel = bot.mockChannel();
-      handler.targetChannel = channel;
-      fs.writeFileSync("test.z5", "abcdef");
-
-      handler.loadGame({
-        path: "test.z5"
-      });
-      const mode = handler.mode;
-      const message = channel.lastMessage;
-
-      handler.closeGame();
-      fs.unlinkSync("test.z5");
-
-      assert.equal(mode, 1);
-    });
   });
 
 });
