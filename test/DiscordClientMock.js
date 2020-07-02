@@ -15,6 +15,30 @@ class DiscordClientMock {
     this.lastMessage = config;
   }
 
+  /**
+   * @return {DiscordChannelMock}
+   */
+  mockChannel() {
+    return new DiscordChannelMock(this);
+  }
+
+}
+
+class DiscordChannelMock {
+  /**
+   * @param {DiscordClientMock} clientMock
+   */
+  constructor(clientMock) {
+    this.clientMock = clientMock;
+    this.lastMessage = null;
+  }
+
+  /**
+   * @param {string} message
+   */
+  send(message) {
+    this.lastMessage = message;
+  }
 }
 
 class DiscordUserMock {

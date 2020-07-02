@@ -1,6 +1,7 @@
 const StorageManager = require("./../utility/StorageManager");
 const StringDecoder = require("string_decoder").StringDecoder;
 const decoder = new StringDecoder("utf8");
+const fs = require("fs");
 var utf8 = require("utf8");
 
 var spawn = require("child_process").spawn;
@@ -10,10 +11,12 @@ class MessageHandler {
 
   /**
    * @param {import('discord.js').Client} client
+   * @param {import('./Logger')} logger
    * @param {object} appConfig
    */
-  constructor(client, appConfig) {
+  constructor(client, logger, appConfig) {
     this.client = client;
+    this.logger = logger;
     this.appConfig = appConfig;
     this.mode = 0; // start in menu mode
     this.game = null;
@@ -40,13 +43,13 @@ class MessageHandler {
     if(targetChannelId) {
       const targetChannel = await this.client.channels.fetch(targetChannelId);
       this.setTargetChannel(targetChannel, false, false);
-      console.log("Loaded target channel.");
+      this.logger.log("Loaded target channel.");
     }
 
     if(listenChannelId) {
       const listenChannel = await this.client.channels.fetch(listenChannelId);
       this.setListenChannel(listenChannel, false, false);
-      console.log("Loaded listen channel.");
+      this.logger.log("Loaded listen channel.");
     }
   }
 
@@ -247,6 +250,19 @@ class MessageHandler {
     this.game = {
       config: gameConfig
     };
+
+    // Validate that the game file exists before starting dfrotz, because 
+    // dfrotz will not give a very good error about it: 
+    // https://github.com/aeolingamenfel/discord-text-adventure-bot/issues/43
+    if (!fs.existsSync(gameConfig.path)) {
+      this.reply(
+        "Tried to locate game file on server, but failed. See server logs for "
+        + "more details.");
+      this.logger.log(`Tried to load game file at ${gameConfig.path} but could `
+        + `not find file.`);
+      return;
+    }
+
     // Create child process (we'll need to keep track of it in case we
     // need to kill it in the future. The -p switch causes dfrotz to output
     // plaintext, which is useful for quickly parsing.
@@ -261,7 +277,7 @@ class MessageHandler {
     // won't always succeed, depending on the bot's permissions)
     this.setBotOnline(gameConfig.prettyName);
 
-    console.log("Loaded Game: " + gameConfig.prettyName);
+    this.logger.log("Loaded Game: " + gameConfig.prettyName);
 
     // 1 == game mode
     this.mode = 1;
