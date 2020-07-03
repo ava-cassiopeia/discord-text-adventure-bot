@@ -29,7 +29,8 @@ class MessageHandler {
     this.commandPrefix = this.appConfig.settings.commandPrefix;
     this.commentPrefix = this.appConfig.settings.commentPrefix;
     this.storageManager = new StorageManager("main");
-    this.adminManager = new Admin(client, this.storageManager, logger);
+    this.adminManager =
+      new Admin(client, this.storageManager, logger, appConfig);
 
     this.loadFromStorage();
   }

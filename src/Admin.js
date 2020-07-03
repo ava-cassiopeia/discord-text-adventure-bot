@@ -7,14 +7,22 @@ class Admin {
    * @param {import('discord.js').Client} client
    * @param {import('../utility/StorageManager')} storageManager
    * @param {import('./Logger')} logger
+   * @param {object} appConfig
    */
-  constructor(client, storageManager, logger) {
+  constructor(client, storageManager, logger, appConfig) {
     this.client = client;
     this.storageManager = storageManager;
     this.logger = logger;
     /** @type {import('discord.js').User?} */
     this.adminUser = null;
-    this.code = "";
+    this.appConfig = appConfig;
+    this.code = this.appConfig.settings.adminCode || null;
+
+    if (this.code == null) {
+      this.logger.log(
+        "No admin code was specified in the app config. This means that no "
+        + "admin can be set until a code is specified.");
+    }
 
     this.loadUserFromStorage();
   }
@@ -74,6 +82,13 @@ class Admin {
    * @param {import('discord.js').Message} message
    */
   setAdminUserFromMessage(message) {
+    if (this.code == null) {
+      this.logger.log(
+        "A user tried to become admin, but there is no admin code set in the "
+        + "app config, so I did nothing.");
+      return;
+    }
+
     if (this.hasAdminUser() && this.isAdminUser(message.author)) {
       throw new Error("You are already the admin!");
     }
