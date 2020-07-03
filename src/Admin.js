@@ -60,6 +60,10 @@ class Admin {
    * @return {boolean}
    */
   isAdminUser(user) {
+    if (!this.hasAdminUser()) {
+      return false;
+    }
+
     return user.id === this.adminUser.id;
   }
 

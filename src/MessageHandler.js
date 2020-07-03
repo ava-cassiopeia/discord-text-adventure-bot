@@ -132,6 +132,14 @@ class MessageHandler {
       } catch (e) {
         this.reply(e.message);
       }
+    } else if(messageContent.match(/^qqq/)) {
+      if (!this.adminManager.isAdminUser(message.author)) {
+        this.reply(
+          "Only admins can run that command, and you are not the admin.");
+        return;
+      }
+
+      this.quitTheBot();
     } else {
       // if nothing else, pass through the message to Frotz (assuming
       // Frotz is running
@@ -158,7 +166,21 @@ class MessageHandler {
       channel = this.targetChannel;
     }
 
-    channel.send(message);
+    return channel.send(message);
+  }
+
+  /**
+   * Stops the currently running game, closes the connection to Discord, and
+   * generally wraps up the bot.
+   */
+  async quitTheBot() {
+    await this.reply("The bot is shutting down.");
+    this.closeGame();
+    this.client.destroy();
+    console.log(
+      "An admin user invoked $qqq. As a result, the game has been closed and "
+      + "the Discord client has been destroyed. The bot will now shut down.");
+    process.kill(0);
   }
 
   /**
