@@ -1,5 +1,6 @@
 const StorageManager = require("./../utility/StorageManager");
 const StringDecoder = require("string_decoder").StringDecoder;
+const Admin = require("./Admin");
 const decoder = new StringDecoder("utf8");
 const fs = require("fs");
 var utf8 = require("utf8");
@@ -28,6 +29,7 @@ class MessageHandler {
     this.commandPrefix = this.appConfig.settings.commandPrefix;
     this.commentPrefix = this.appConfig.settings.commentPrefix;
     this.storageManager = new StorageManager("main");
+    this.adminManager = new Admin(client, this.storageManager, logger);
 
     this.loadFromStorage();
   }
@@ -122,6 +124,13 @@ class MessageHandler {
     } else if(messageContent.match(/^(save)/i)) {
       // disable saving for now
       this.reply("Saving is disabled for now.");
+    } else if(messageContent.match(/^admin /)) {
+      try {
+        this.adminManager.setAdminUserFromMessage(message);
+        this.reply("You are now set as the bot admin.");
+      } catch (e) {
+        this.reply(e.message);
+      }
     } else {
       // if nothing else, pass through the message to Frotz (assuming
       // Frotz is running
