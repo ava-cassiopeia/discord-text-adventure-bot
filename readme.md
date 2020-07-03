@@ -25,6 +25,9 @@ you, so you will have to run it yourself.
     - [Set Target Listening Channel](#set-target-listening-channel)
     - [Start an Adventure](#start-an-adventure)
     - [Quit an Adventure](#quit-an-adventure)
+    - [Set Yourself as Bot Admin](#set-yourself-as-bot-admin)
+    - [Kill the Bot](#kill-the-bot)
+  - [Config](#config)
   - [Development](#development)
     - [Tests](#tests)
     - [Linting](#linting)
@@ -201,6 +204,32 @@ Starts the specified gamename, which is the `name` specified in the config.json.
 
 Quits the current game. Will only work when in game mode (aka when a game has
 been started with the `$start` command).
+
+### Set Yourself as Bot Admin
+
+**Useage:** `$admin [admincode]`
+
+Sets your Discord account (the one that sends the `$admin ...` message) as the
+admin account for the bot. The admin account has special priviledges and can run
+special commands.
+
+You can and should send this message in a private message to the bot, as the
+admin code will be visible in chat history for anyone to see otherwise.
+
+### Kill the Bot
+
+**Useage:** `$qqq`
+
+*This command can only be run by a bot admin.*
+
+Stops the currently running game, closes the connection with Discord, and kills
+the bot.
+
+## Config
+
+As mentioned prior, all config should live in `config.json`, and an example
+config is provided for you:
+[`config.json.example`](https://github.com/aeolingamenfel/discord-text-adventure-bot/blob/master/config.json.example)
 
 ## Development
 

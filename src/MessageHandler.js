@@ -1,5 +1,6 @@
 const StorageManager = require("./../utility/StorageManager");
 const StringDecoder = require("string_decoder").StringDecoder;
+const Admin = require("./Admin");
 const decoder = new StringDecoder("utf8");
 const fs = require("fs");
 var utf8 = require("utf8");
@@ -28,6 +29,8 @@ class MessageHandler {
     this.commandPrefix = this.appConfig.settings.commandPrefix;
     this.commentPrefix = this.appConfig.settings.commentPrefix;
     this.storageManager = new StorageManager("main");
+    this.adminManager =
+      new Admin(client, this.storageManager, logger, appConfig);
 
     this.loadFromStorage();
   }
@@ -122,6 +125,21 @@ class MessageHandler {
     } else if(messageContent.match(/^(save)/i)) {
       // disable saving for now
       this.reply("Saving is disabled for now.");
+    } else if(messageContent.match(/^admin /)) {
+      try {
+        this.adminManager.setAdminUserFromMessage(message);
+        this.reply("You are now set as the bot admin.");
+      } catch (e) {
+        this.reply(e.message);
+      }
+    } else if(messageContent.match(/^qqq/)) {
+      if (!this.adminManager.isAdminUser(message.author)) {
+        this.reply(
+          "Only admins can run that command, and you are not the admin.");
+        return;
+      }
+
+      this.quitTheBot();
     } else {
       // if nothing else, pass through the message to Frotz (assuming
       // Frotz is running
@@ -148,7 +166,21 @@ class MessageHandler {
       channel = this.targetChannel;
     }
 
-    channel.send(message);
+    return channel.send(message);
+  }
+
+  /**
+   * Stops the currently running game, closes the connection to Discord, and
+   * generally wraps up the bot.
+   */
+  async quitTheBot() {
+    await this.reply("The bot is shutting down.");
+    this.closeGame();
+    this.client.destroy();
+    console.log(
+      "An admin user invoked $qqq. As a result, the game has been closed and "
+      + "the Discord client has been destroyed. The bot will now shut down.");
+    process.kill(0);
   }
 
   /**
