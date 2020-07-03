@@ -2,6 +2,8 @@ class DiscordClientMock {
 
   constructor() {
     this.user = new DiscordUserMock();
+    this.users = new CollectionMock();
+    this.channels = new CollectionMock();
     this.lastMessage = null;
   }
 
@@ -22,6 +24,14 @@ class DiscordClientMock {
     return new DiscordChannelMock(this);
   }
 
+}
+
+class CollectionMock {
+  fetch() {
+    return new Promise((resolve) => {
+      resolve(null);
+    });
+  }
 }
 
 class DiscordChannelMock {
